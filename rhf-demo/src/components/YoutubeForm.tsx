@@ -148,8 +148,13 @@ const YoutubeForm = () => {
               //   return fieldValue !== 'admin@example.com' || 'email address not allowed';
               // }
               validate: {
-                notAllowedEmail: (fieldValue) => fieldValue !== 'admin@example.com' || 'email address not allowed',
-                notBlacklisted: (fieldValue) => !fieldValue.endsWith('baddomain.com') || 'this domain is not supported'
+                notAllowedEmail: (fieldValue) => fieldValue !== 'admin@example.com' || 'Email address not allowed',
+                notBlacklisted: (fieldValue) => !fieldValue.endsWith('baddomain.com') || 'This domain is not supported',
+                emailExists: async (fieldValue) => {
+                  const response = await fetch('https://jsonplaceholder.typicode.com/users?email=' + fieldValue);
+                  const data = await response.json();
+                  return data.length === 0 || 'Email already exists';
+                }
               }
             })} 
           />
