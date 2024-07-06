@@ -1,4 +1,4 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useEffect } from "react";
 
@@ -54,6 +54,12 @@ const YoutubeForm = () => {
     console.log('Form submitted. Form data = ', data);
   }
 
+  //onError is called when there are errors in the form
+  //With this, we can handle the errors in a custom way
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log('Form errors = ', errors);
+  }
+
   //NOTE: watch triggers re-render of the component when the watched value changes
   // const watchUsername = watch('username'); //watch is used to watch the value of a field
   // const watchMultiple = watch(['username', 'email']); //watch multiple fields (username and email in this case
@@ -95,7 +101,7 @@ const YoutubeForm = () => {
       <h2>Watched values: {JSON.stringify(watchMultiple)}</h2>
       <h2>Watched all fields: {JSON.stringify(watchAllFields)}</h2> */}
 
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username:</label>
           {/* <input 
