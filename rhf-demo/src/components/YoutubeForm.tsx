@@ -40,8 +40,8 @@ const YoutubeForm = () => {
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
-  const { errors, touchedFields, dirtyFields, isDirty } = formState; //errors is an object that contains all the errors of the form and its fields
-  console.log({ touchedFields, dirtyFields, isDirty })
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState; //errors is an object that contains all the errors of the form and its fields
+  console.log({ touchedFields, dirtyFields, isDirty, isValid })
   //Note: dirty is tested against the default values. If after modifying, you go back to default value, dirty is false
   //isDirty can be used to enable/disable the submit button
 
@@ -66,12 +66,12 @@ const YoutubeForm = () => {
   // const watchAllFields = watch(); //watch all fields
 
   //perform side effects when the watched value changes
-  useEffect(() => {
-    const subscription = watch((value) => {
-      console.log(value);
-    });
-    return () => subscription.unsubscribe();
-  }, [watch])
+  // useEffect(() => {
+  //   const subscription = watch((value) => {
+  //     console.log(value);
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [watch])
 
   //getValues does not trigger re-renders
   const handleGetValues = () => {
@@ -94,6 +94,8 @@ const YoutubeForm = () => {
   renderCount++;
 
   //noValidate is for turning off browser validation
+
+  //NOTE: setting a field disabled by react-hook makes the form dirty
   return (
     <div>
       <h1>Youtube Form {renderCount / 2}</h1>
@@ -169,7 +171,7 @@ const YoutubeForm = () => {
             type="text" 
             id="twitter" 
             {...register('social.twitter', {
-              disabled: true, //value becomes undefined and validations are also disabled
+              // disabled: true, //value becomes undefined and validations are also disabled
               required: {
                 value: true,
                 message: 'Twitter is required'
@@ -185,7 +187,7 @@ const YoutubeForm = () => {
             type="text" 
             id="facebook" 
             {...register('social.facebook', {
-              disabled: watch('channel') === '', //disable the field if channel is empty
+              // disabled: watch('channel') === '', //disable the field if channel is empty
               required: {
                 value: true,
                 message: 'Facebook is required'
@@ -277,7 +279,7 @@ const YoutubeForm = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetValues}>Get Values</button>
         <button type="button" onClick={handleSetValue}>Set Value</button>
       </form>
