@@ -60,6 +60,13 @@ const YoutubeForm = () => {
               pattern: {
                 value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                 message: 'Invalid email format'
+              },
+              // validate: (fieldValue) => {
+              //   return fieldValue !== 'admin@example.com' || 'email address not allowed';
+              // }
+              validate: {
+                notAllowedEmail: (fieldValue) => fieldValue !== 'admin@example.com' || 'email address not allowed',
+                notBlacklisted: (fieldValue) => !fieldValue.endsWith('baddomain.com') || 'this domain is not supported'
               }
             })} 
           />
