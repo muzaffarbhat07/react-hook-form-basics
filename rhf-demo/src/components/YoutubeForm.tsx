@@ -36,7 +36,7 @@ const YoutubeForm = () => {
       dob: new Date()
     }
   });
-  const { register, control, handleSubmit, formState, watch } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
@@ -51,9 +51,10 @@ const YoutubeForm = () => {
     console.log('Form submitted. Form data = ', data);
   }
 
-  const watchUsername = watch('username'); //watch is used to watch the value of a field
-  const watchMultiple = watch(['username', 'email']); //watch multiple fields (username and email in this case
-  const watchAllFields = watch(); //watch all fields
+  //NOTE: watch triggers re-render of the component when the watched value changes
+  // const watchUsername = watch('username'); //watch is used to watch the value of a field
+  // const watchMultiple = watch(['username', 'email']); //watch multiple fields (username and email in this case
+  // const watchAllFields = watch(); //watch all fields
 
   //perform side effects when the watched value changes
   useEffect(() => {
@@ -63,14 +64,22 @@ const YoutubeForm = () => {
     return () => subscription.unsubscribe();
   }, [watch])
 
+  //getValues does not trigger re-renders
+  const handleGetValues = () => {
+    console.log('Form values = ', getValues()); //get all values
+    console.log('Email = ', getValues('email')); //get value of email field
+    console.log('Multiple values = ', getValues(['username', 'email'])); //get values of multiple fields
+  }
+
   renderCount++;
+
   //noValidate is for turning off browser validation
   return (
     <div>
       <h1>Youtube Form {renderCount / 2}</h1>
-      <h2>Watched value: {watchUsername}</h2>
+      {/* <h2>Watched value: {watchUsername}</h2>
       <h2>Watched values: {JSON.stringify(watchMultiple)}</h2>
-      <h2>Watched all fields: {JSON.stringify(watchAllFields)}</h2>
+      <h2>Watched all fields: {JSON.stringify(watchAllFields)}</h2> */}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="form-control">
@@ -247,6 +256,7 @@ const YoutubeForm = () => {
         </div>
 
         <button type="submit">Submit</button>
+        <button type="button" onClick={handleGetValues}>Get Values</button>
       </form>
       <DevTool control={control}/>
     </div>
