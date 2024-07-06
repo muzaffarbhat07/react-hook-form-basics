@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
 let renderCount = 0;
@@ -12,6 +12,9 @@ type FormValues = {
     facebook: string;
   };
   phoneNumbers: string[];
+  phNumbers: {
+    number: string
+  }[];
 }
 
 const YoutubeForm = () => {
@@ -24,7 +27,8 @@ const YoutubeForm = () => {
         twitter: '',
         facebook: ''
       },
-      phoneNumbers: ['', '']
+      phoneNumbers: ['', ''],
+      phNumbers: [{ number: '' }]
     }
   });
   const { register, control, handleSubmit, formState } = form;
@@ -32,7 +36,11 @@ const YoutubeForm = () => {
   // const { name, ref, onChange, onBlur } = register('username');
 
   const { errors } = formState; //errors is an object that contains all the errors of the form and its fields
-  console.log('Errors = ', errors);
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'phNumbers'
+  });
 
   const onSubmit = (data: FormValues) => {
     console.log('Form submitted. Form data = ', data);
@@ -163,6 +171,26 @@ const YoutubeForm = () => {
             })}
           />
           <p className="error">{errors.phoneNumbers && errors.phoneNumbers[1]?.message}</p>
+        </div>
+
+        <div>
+          <label htmlFor="phNumbers">List of Phone Numbers:</label>
+          {fields.map((field, index) => (
+            <div key={field.id} className="form-control">
+              <input 
+                type="text" 
+                {...register(`phNumbers.${index}.number`, {
+                  required: {
+                    value: true,
+                    message: 'Phone number is required'
+                  }
+                })}
+              />
+              {index > 0 && <button type="button" onClick={() => remove(index)}>Remove</button>}
+              <p className="error">{errors.phNumbers && errors.phNumbers[index]?.number?.message}</p>
+            </div>
+          ))}
+          <button type="button" onClick={() => append({ number: '' })}>Add Phone Number</button>
         </div>
 
         <button type="submit">Submit</button>
