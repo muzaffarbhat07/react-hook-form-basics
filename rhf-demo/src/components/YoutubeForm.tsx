@@ -36,7 +36,7 @@ const YoutubeForm = () => {
       dob: new Date()
     }
   });
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
@@ -69,6 +69,17 @@ const YoutubeForm = () => {
     console.log('Form values = ', getValues()); //get all values
     console.log('Email = ', getValues('email')); //get value of email field
     console.log('Multiple values = ', getValues(['username', 'email'])); //get values of multiple fields
+  }
+
+  const handleSetValue = () => {
+    setValue('username', 'admin'); //set value of username field
+    //by default, setValue does not affect the states of the field value like touched, dirty
+    //to update the states, pass the second argument as below
+    setValue('email', 'myemail@example.com', {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true
+    })
   }
 
   renderCount++;
@@ -257,6 +268,7 @@ const YoutubeForm = () => {
 
         <button type="submit">Submit</button>
         <button type="button" onClick={handleGetValues}>Get Values</button>
+        <button type="button" onClick={handleSetValue}>Set Value</button>
       </form>
       <DevTool control={control}/>
     </div>
