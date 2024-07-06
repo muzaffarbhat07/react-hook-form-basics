@@ -40,8 +40,8 @@ const YoutubeForm = () => {
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState; //errors is an object that contains all the errors of the form and its fields
-  console.log({ touchedFields, dirtyFields, isDirty, isValid })
+  const { errors, touchedFields, dirtyFields, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState; //errors is an object that contains all the errors of the form and its fields
+  console.log({ touchedFields, dirtyFields, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount })
   //Note: dirty is tested against the default values. If after modifying, you go back to default value, dirty is false
   //isDirty can be used to enable/disable the submit button
 
@@ -279,7 +279,7 @@ const YoutubeForm = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button type="submit" disabled={!isDirty || !isValid}>Submit</button>
+        <button type="submit" disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
         <button type="button" onClick={handleGetValues}>Get Values</button>
         <button type="button" onClick={handleSetValue}>Set Value</button>
       </form>
