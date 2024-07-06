@@ -22,7 +22,7 @@ const YoutubeForm = () => {
   }
 
   renderCount++;
-  //noValidate is for browser validation
+  //noValidate is for turning off browser validation
   return (
     <div>
       <h1>Youtube Form {renderCount / 2}</h1>
