@@ -40,8 +40,11 @@ const YoutubeForm = () => {
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
-  const { errors } = formState; //errors is an object that contains all the errors of the form and its fields
-
+  const { errors, touchedFields, dirtyFields, isDirty } = formState; //errors is an object that contains all the errors of the form and its fields
+  console.log({ touchedFields, dirtyFields, isDirty })
+  //Note: dirty is tested against the default values. If after modifying, you go back to default value, dirty is false
+  //isDirty can be used to enable/disable the submit button
+  
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'phNumbers'
