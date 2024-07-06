@@ -1,6 +1,6 @@
 import { DevTool } from "@hookform/devtools";
 import { TextField, Button, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 
 type FormValues = {
@@ -16,7 +16,7 @@ const MuiLoginForm = () => {
     }
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log('Form submitted. Form data = ', data);
   }
 

@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -9,14 +9,16 @@ const validationSchema = z.object({
   channel: z.string().min(1, "Channel is required"),
 });
 
-type FormValues = {
-  username: string;
-  email: string;
-  channel: string;
-}
+// type FormValues = {
+//   username: string;
+//   email: string;
+//   channel: string;
+// }
+
+type FormValues = z.infer<typeof validationSchema>;
 
 const ZodYoutubeForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
       username: "",
       email: "",
@@ -25,8 +27,11 @@ const ZodYoutubeForm = () => {
     resolver: zodResolver(validationSchema),
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log('Form submitted. Form data = ', data);
+
+    //setError("username", { message: "This is an error message" });
+    //setError("root", { message: "This is an error message" });
   }
   return (
     <div>
