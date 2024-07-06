@@ -36,7 +36,7 @@ const YoutubeForm = () => {
       dob: new Date()
     }
   });
-  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
@@ -52,6 +52,8 @@ const YoutubeForm = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log('Form submitted. Form data = ', data);
+    // reset(); //reset the form after submission
+    //recommended to not use here, rather use with isSubmitSuccessful in the useEffect hook
   }
 
   //onError is called when there are errors in the form
@@ -90,6 +92,10 @@ const YoutubeForm = () => {
       shouldTouch: true
     })
   }
+
+  useEffect(() => {
+    if(isSubmitSuccessful) reset();
+  }, [isSubmitSuccessful, reset]); //useEffect to reset the form after successful submission
 
   renderCount++;
 
@@ -280,6 +286,7 @@ const YoutubeForm = () => {
         </div>
 
         <button type="submit" disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
+        <button type="button" onClick={() => reset()}>Reset</button>
         <button type="button" onClick={handleGetValues}>Get Values</button>
         <button type="button" onClick={handleSetValue}>Set Value</button>
       </form>
