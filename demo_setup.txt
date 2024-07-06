@@ -1,0 +1,8 @@
+Project Setup
+	Vite
+		npm create vite@latest rhf-demo
+		• For framework, select React
+		• For variant, choose TypeScript
+	cd rhf-demo
+	npm install
+	npm run dev
