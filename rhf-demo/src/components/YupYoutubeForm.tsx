@@ -1,4 +1,13 @@
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+
+const validationSchema = yup.object({
+  username: yup.string().required("Username is required"),
+  email: yup.string().email("Email is not valid").required("Email is required"),
+  channel: yup.string().required("Channel is required"),
+});
 
 type FormValues = {
   username: string;
@@ -13,6 +22,7 @@ const YupYoutubeForm = () => {
       email: "",
       channel: "",
     },
+    resolver: yupResolver(validationSchema),
   });
 
   const onSubmit = (data: FormValues) => {
