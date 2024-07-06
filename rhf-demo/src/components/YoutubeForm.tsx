@@ -41,7 +41,7 @@ const YoutubeForm = () => {
     // mode: 'onChange'
     // mode: 'all'
   });
-  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset, trigger } = form;
   //register allows us to register the input fields with the form to control/track their values
   // const { name, ref, onChange, onBlur } = register('username');
 
@@ -299,6 +299,8 @@ const YoutubeForm = () => {
         <button type="button" onClick={() => reset()}>Reset</button>
         <button type="button" onClick={handleGetValues}>Get Values</button>
         <button type="button" onClick={handleSetValue}>Set Value</button>
+        <button type="button" onClick={() => trigger()}>Validate</button>
+        <button type="button" onClick={() => trigger('channel')}>Validate Channel</button>
       </form>
       <DevTool control={control}/>
     </div>
