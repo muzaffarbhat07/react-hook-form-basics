@@ -44,7 +44,7 @@ const YoutubeForm = () => {
   console.log({ touchedFields, dirtyFields, isDirty })
   //Note: dirty is tested against the default values. If after modifying, you go back to default value, dirty is false
   //isDirty can be used to enable/disable the submit button
-  
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'phNumbers'
@@ -163,6 +163,7 @@ const YoutubeForm = () => {
             type="text" 
             id="twitter" 
             {...register('social.twitter', {
+              disabled: true, //value becomes undefined and validations are also disabled
               required: {
                 value: true,
                 message: 'Twitter is required'
@@ -178,6 +179,7 @@ const YoutubeForm = () => {
             type="text" 
             id="facebook" 
             {...register('social.facebook', {
+              disabled: watch('channel') === '', //disable the field if channel is empty
               required: {
                 value: true,
                 message: 'Facebook is required'
