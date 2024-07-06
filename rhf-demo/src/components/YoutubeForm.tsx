@@ -34,7 +34,12 @@ const YoutubeForm = () => {
       phNumbers: [{ number: '' }],
       age: 0,
       dob: new Date()
-    }
+    },
+    mode: 'onSubmit' // default
+    // mode: 'onBlur'
+    // mode: 'onTouched'
+    // mode: 'onChange'
+    // mode: 'all'
   });
   const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
   //register allows us to register the input fields with the form to control/track their values
